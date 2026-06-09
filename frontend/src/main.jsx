@@ -22,12 +22,26 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   </React.StrictMode>
 );
 
-// Register PWA service worker
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
-      .register("/sw.js")
-      .then((reg) => console.log("Service Worker registered successfully:", reg.scope))
-      .catch((err) => console.log("Service Worker registration failed:", err));
+      .getRegistrations()
+      .then((registrations) =>
+        Promise.all(registrations.map((registration) => registration.unregister()))
+      )
+      .catch((err) => console.log("Service Worker cleanup failed:", err));
+
+    if ("caches" in window) {
+      caches
+        .keys()
+        .then((cacheNames) =>
+          Promise.all(
+            cacheNames
+              .filter((cacheName) => cacheName.startsWith("sphere-cache"))
+              .map((cacheName) => caches.delete(cacheName))
+          )
+        )
+        .catch((err) => console.log("Cache cleanup failed:", err));
+    }
   });
 }

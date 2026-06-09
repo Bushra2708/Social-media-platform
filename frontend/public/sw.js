@@ -1,20 +1,22 @@
-const CACHE_NAME = "sphere-cache-v1";
-const urlsToCache = ["/", "/index.html"];
+self.addEventListener("install", () => {
+  self.skipWaiting();
+});
 
-// Install service worker
-self.addEventListener("install", (event) => {
+self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(urlsToCache);
-    })
+    caches
+      .keys()
+      .then((cacheNames) =>
+        Promise.all(
+          cacheNames
+            .filter((cacheName) => cacheName.startsWith("sphere-cache"))
+            .map((cacheName) => caches.delete(cacheName))
+        )
+      )
+      .then(() => self.clients.claim())
   );
 });
 
-// Cache fetch requests
 self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
-    })
-  );
+  event.respondWith(fetch(event.request));
 });
