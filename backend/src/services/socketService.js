@@ -4,9 +4,30 @@ let io;
 const userSockets = new Map(); // Maps userId (string) -> array of socket.id strings (supporting multi-tab sessions)
 
 const init = (server) => {
+  const configuredOrigins = [
+    process.env.CLIENT_URL,
+    process.env.FRONTEND_URL,
+    process.env.CORS_ORIGIN,
+  ]
+    .filter(Boolean)
+    .flatMap((value) => value.split(","))
+    .map((value) => value.trim().replace(/\/$/, ""))
+    .filter(Boolean);
+
   io = socketIo(server, {
     cors: {
-      origin: true, // Auto-reflect client origin headers to prevent CORS mismatches
+      origin(origin, callback) {
+        if (!origin || configuredOrigins.length === 0) {
+          return callback(null, true);
+        }
+
+        const normalizedOrigin = origin.replace(/\/$/, "");
+        if (configuredOrigins.includes(normalizedOrigin)) {
+          return callback(null, true);
+        }
+
+        return callback(new Error(`Socket CORS blocked origin: ${origin}`));
+      },
       methods: ["GET", "POST"],
       credentials: true
     }

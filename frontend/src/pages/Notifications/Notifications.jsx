@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getNotifications, markNotificationsRead, clearNotifications } from "../../services/notificationService";
-import { FiBell, FiHeart, FiMessageCircle, FiUserPlus, FiTrash2, FiCheck } from "react-icons/fi";
+import { FiBell, FiHeart, FiMessageCircle, FiUserPlus, FiTrash2 } from "react-icons/fi";
 
 export default function Notifications() {
   const [notifications, setNotifications] = useState([]);

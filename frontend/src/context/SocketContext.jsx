@@ -5,6 +5,15 @@ import { useToast } from "./ToastContext";
 
 const SocketContext = createContext();
 
+const getSocketUrl = () => {
+  if (import.meta.env.VITE_SOCKET_URL) {
+    return import.meta.env.VITE_SOCKET_URL;
+  }
+
+  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+  return apiUrl.replace(/\/api\/?$/, "");
+};
+
 export const SocketProvider = ({ children }) => {
   const { user } = useAuth();
   const { showToast } = useToast();
@@ -24,10 +33,7 @@ export const SocketProvider = ({ children }) => {
       return;
     }
 
-    // Connect to WebSocket server on backend port
-  const socket = io(
-  "https://social-media-platform-q6i3.onrender.com/s"
-);
+    const socketUrl = getSocketUrl();
     const newSocket = io(socketUrl, {
       transports: ["websocket"],
       withCredentials: true

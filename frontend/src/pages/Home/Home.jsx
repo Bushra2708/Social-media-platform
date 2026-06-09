@@ -5,7 +5,7 @@ import { getPosts, getFeedPosts, createPost } from "../../services/postService";
 import { searchUsers } from "../../services/userService";
 import PostCard from "../../components/PostCard";
 import StoriesTray from "../../components/StoriesTray";
-import { FiImage, FiX, FiCpu, FiZap } from "react-icons/fi";
+import { FiImage, FiX, FiCpu } from "react-icons/fi";
 
 export default function Home() {
   const { user } = useAuth();

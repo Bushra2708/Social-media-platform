@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
 import { searchUsers } from "../services/userService";
-import { FiSearch, FiMonitor, FiUser, FiBell, FiHome, FiMessageSquare, FiTrendingUp, FiMoon, FiSun } from "react-icons/fi";
+import { FiSearch, FiUser, FiBell, FiHome, FiMessageSquare, FiTrendingUp, FiMoon, FiSun } from "react-icons/fi";
 
 export default function CommandPalette() {
   const { user } = useAuth();

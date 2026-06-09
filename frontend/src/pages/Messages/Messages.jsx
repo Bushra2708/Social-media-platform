@@ -85,7 +85,7 @@ export default function Messages() {
             c.user._id === activeChat._id ? { ...c, unreadCount: 0 } : c
           )
         );
-      } catch (error) {
+      } catch {
         showToast("Failed to load chat history", "error");
       } finally {
         setLoadingMessages(false);
@@ -137,7 +137,7 @@ export default function Messages() {
       
       // Update our conversation list with this last message
       fetchConversations();
-    } catch (error) {
+    } catch {
       showToast("Message failed to send", "error");
     } finally {
       setSending(false);
@@ -487,7 +487,7 @@ function formatDistance(dateStr) {
     if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
     if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
     return date.toLocaleDateString(undefined, { month: "short", day: "numeric" });
-  } catch (err) {
+  } catch {
     return "";
   }
 }

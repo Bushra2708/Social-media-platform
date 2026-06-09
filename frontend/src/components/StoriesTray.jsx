@@ -47,7 +47,7 @@ export default function StoriesTray() {
       await createStory(file);
       showToast("Story published! Active for 24h", "success");
       fetchActiveStories();
-    } catch (error) {
+    } catch {
       showToast("Failed to upload story", "error");
     } finally {
       setUploading(false);
@@ -304,7 +304,7 @@ function formatStoryTime(dateStr) {
       return `${minutes <= 0 ? 1 : minutes}m ago`;
     }
     return `${hours}h ago`;
-  } catch (err) {
+  } catch {
     return "";
   }
 }

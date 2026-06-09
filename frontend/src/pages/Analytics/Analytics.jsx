@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
-import { useTheme } from "../../context/ThemeContext";
-import { FiUsers, FiFileText, FiMessageSquare, FiTrendingUp, FiSmile, FiActivity } from "react-icons/fi";
+import { FiUsers, FiFileText, FiMessageSquare, FiSmile, FiActivity } from "react-icons/fi";
 
 export default function Analytics() {
-  const { theme } = useTheme();
   const [loading, setLoading] = useState(true);
 
   // Dynamic metrics state
-  const [stats, setStats] = useState({
+  const [stats] = useState({
     totalUsers: 142,
     totalPosts: 840,
     totalDMs: 1204,
@@ -33,8 +31,6 @@ export default function Analytics() {
   }
 
   // Data for registration chart
-  const regData = [10, 18, 25, 45, 60, 95, 142];
-  const postData = [40, 52, 70, 64, 85, 110, 130];
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
   return (
