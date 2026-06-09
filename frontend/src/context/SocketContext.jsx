@@ -25,7 +25,9 @@ export const SocketProvider = ({ children }) => {
     }
 
     // Connect to WebSocket server on backend port
-    const socketUrl = "http://localhost:5000";
+  const socket = io(
+  "https://social-media-platform-q6i3.onrender.com/s"
+);
     const newSocket = io(socketUrl, {
       transports: ["websocket"],
       withCredentials: true
